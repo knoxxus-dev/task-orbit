@@ -1,4 +1,4 @@
-import { Task } from "./Task";
+import Task from "./Task";
 
 export const MOCK_TASKS = [
     new Task({
@@ -58,6 +58,16 @@ export const MOCK_TASKS = [
         assignedTo: "frank",
         dueDate: new Date("2025-08-08T09:00:00Z"),
         priority: "low",
+        status: "done",
+        isArchived: true,
+    }),
+    new Task({
+        id: 7,
+        title: "This is a dummy task",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        assignedTo: "Anurag",
+        dueDate: new Date("2025-08-08T09:00:00Z"),
+        priority: "high",
         status: "done",
         isArchived: true,
     }),

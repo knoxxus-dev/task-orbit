@@ -1,4 +1,4 @@
-export class Task {
+export  default class Task {
     id: number | undefined;
     title: string = "";
     description: string = "";
