@@ -25,6 +25,7 @@ function TaskList({ tasks, onSave }: TaskListProps) {
                 <div key={task.id} className="cols-sm">
                     {task === taskBeingEdited ? (
                         <TaskForm
+                            task={task}
                             onCancel={cancelEdit}
                             onSave={onSave}
                         />

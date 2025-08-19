@@ -24,6 +24,8 @@ function TaskCard({ task, onEdit }: TaskCardProps) {
                 <p>{formatDescription(task.description)}</p>
                 <p>{task.assignedTo}</p>
                 <p>{task.dueDate.toString()}</p>
+                <p>{task.priority}</p>
+                <p>{task.status}</p>
                 <button
                     className="bordered"
                     onClick={() => {
