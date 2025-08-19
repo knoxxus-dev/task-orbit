@@ -1,6 +1,22 @@
-function TaskForm() {
+import type { SyntheticEvent } from "react";
+import Task from "./Task";
+
+interface TaskFormProps {
+    onSave: (task: Task) => void;
+    onCancel: () => void;
+}
+
+function TaskForm({ onSave, onCancel }: TaskFormProps) {
+
+    const handleSubmit = (event: SyntheticEvent) => {
+        event.preventDefault();
+        onSave(new Task({ title: "Updated Task." }));
+    }
+
     return (
-        <form className="input-group vertical">
+        <form className="input-group vertical"
+            onSubmit={handleSubmit}
+        >
             <label htmlFor="title">Task Title</label>
             <input
                 type="text"
@@ -49,9 +65,13 @@ function TaskForm() {
             />
 
             <div className="input-group">
-                <button className="primary bordered medium">Save</button>
+                <button className="primary bordered medium">
+                    Save
+                </button>
                 <span />
-                <button type="button" className="bordered medium">
+                <button type="button" className="bordered medium"
+                    onClick={onCancel}
+                >
                     Cancel
                 </button>
             </div>

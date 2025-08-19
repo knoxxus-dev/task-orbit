@@ -5,21 +5,29 @@ import TaskForm from "./TaskForm";
 
 interface TaskListProps {
     tasks: Task[];
+    onSave: (task: Task) => void;
 }
 
-function TaskList({ tasks }: TaskListProps) {
+function TaskList({ tasks, onSave }: TaskListProps) {
     const [taskBeingEdited, setTaskBeingEdited] = useState<Task | null>(null);
 
     const handleEdit = (task: Task) => {
         setTaskBeingEdited(task);
     }
 
+    const cancelEdit = () => {
+        setTaskBeingEdited(null);
+    };
+
     return (
         <div className="row">
             {tasks.map((task) => (
                 <div key={task.id} className="cols-sm">
                     {task === taskBeingEdited ? (
-                        <TaskForm />
+                        <TaskForm
+                            onCancel={cancelEdit}
+                            onSave={onSave}
+                        />
                     ) : (
                         <TaskCard task={task} onEdit={handleEdit} />
                     )}
