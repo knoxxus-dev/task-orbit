@@ -7,11 +7,12 @@ function formatDescription(description: string): string {
 
 interface TaskCardProps {
     task: Task;
+    onEdit: (task: Task) => void;
 }
 
-function TaskCard({ task }: TaskCardProps) {
+function TaskCard({ task, onEdit }: TaskCardProps) {
     const handleEditClick = (taskBeingEdited: Task) => {
-        console.log(taskBeingEdited);
+        onEdit(taskBeingEdited);
     };
     return (
         <div className="card">
