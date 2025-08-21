@@ -1,7 +1,11 @@
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 import Task from "./Task";
-import type { errorSchema } from "./types";
+
+interface errorSchema {
+    title: string;
+    description: string;
+}
 
 interface TaskFormProps {
     task: Task;
