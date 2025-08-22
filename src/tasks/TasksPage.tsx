@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { MOCK_TASKS } from "./MockTasks";
+import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import Task from "./Task";
+import { getTasks } from "../utils/api"
 
 function TasksPage() {
 
-    const [tasks, setTasks] = useState<Task[]>(MOCK_TASKS);
+    const [tasks, setTasks] = useState<Task[]>([]);
 
     const saveTask = (task: Task) => {
         let updatedTasks = tasks.map((t: Task) => {
@@ -13,6 +13,12 @@ function TasksPage() {
         });
         setTasks(updatedTasks);
     }
+
+    useEffect(() => {
+        getTasks()
+            .then(setTasks)
+            .catch(console.error);
+    }, []);
 
     return (
         <>
