@@ -1,69 +1,92 @@
-# React + TypeScript + Vite
+# Task Orbit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Task Orbit is a full-stack task management application built with React, TypeScript, and Vite on the frontend, and Express.js on the backend. It allows users to manage tasks with features like task creation, editing, and status tracking.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Frontend
+- Built with React and TypeScript.
+- Task list with cards for each task.
+- Task editing form with validation.
+- Mock data for initial tasks.
+- Responsive design using `mini.css`.
 
-## Expanding the ESLint configuration
+### Backend
+- Built with Express.js and TypeScript.
+- REST API for managing tasks.
+- CORS configuration for secure communication.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Structure
 
-```js
-export default tseslint.config([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+### Frontend
+The frontend code is located in the `src/` directory:
+- `tasks/`: Contains components for task management (e.g., `TaskCard`, `TaskForm`, `TaskList`, `TasksPage`).
+- `assets/`: Contains static assets like images.
+- `App.tsx`: Main application component.
+- `main.tsx`: Entry point for the React app.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Backend
+The backend code is located in the `server/src/` directory:
+- `routes/`: Defines API routes (e.g., `taskRoutes.ts`).
+- `controllers/`: Contains logic for handling API requests (e.g., `taskController.ts`).
+- `config/`: Configuration files (e.g., `corsOptions.ts`).
+- `server.ts`: Starts the Express server.
+- `app.ts`: Configures middleware and routes.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Getting Started
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Prerequisites
+- Node.js (v16+)
+- npm or yarn
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x"
-import reactDom from "eslint-plugin-react-dom"
+### Installation
+1. Clone the repository:
 
-export default tseslint.config([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    ```bash
+    git clone <repository-url>
+    cd task-orbit
+2. Install dependencies for both frontend and backend:
+
+    ```bash
+    npm install
+    cd server
+    npm install
+### Development
+To run the project in development mode:
+
+1. Start the backend server:
+
+    ```bash
+    npm run dev --prefix server
+2. Start the frontend development server:
+
+    ```bash
+    npm run dev
+3. Alternatively, you can run both servers concurrently:
+
+    ```bash
+    npm run dev:fullstack
+The frontend will be available at http://localhost:5173 and the backend at http://localhost:5000 unless specified in an environment file.
+
+### API Endpoints
+- GET /routes: Fetch all tasks.
+- POST /routes: Create a new task.
+
+### Technologies Used
+
+#### Frontend
+- `React`
+- `TypeScript`
+- `Vite`
+- `mini.css`
+
+#### Backend
+- `Express.js`
+- `TypeScript`
+- `CORS`
+
+#### Development Tools
+- `ESLint`
+- `Nodemon`
+- `ts-node`
+
