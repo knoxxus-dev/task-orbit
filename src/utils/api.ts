@@ -7,5 +7,9 @@ export async function getTasks(): Promise<Task[]> {
     if (!response.ok) {
         throw new Error("Failed to fetch tasks.");
     }
-    return response.json();
+    const data = await response.json();
+    return data.map((task: Task) => ({
+        ...task,
+        dueDate: new Date(task.dueDate),
+    }));
 }
