@@ -18,7 +18,6 @@ function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
     const [task, setTask] = useState<Task>(initialTask);
     const [error, setError] = useState<errorSchema>({ title: '', description: '' });
 
-
     const handleSubmit = (event: SyntheticEvent) => {
         event.preventDefault();
         if (!isValid()) return;
@@ -100,7 +99,7 @@ function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
             />
             {error.description.length > 0 && (
                 <div className="card error">
-                    <p>{error.title}</p>
+                    <p>{error.description}</p>
                 </div>
             )}
             <label htmlFor="assignedTo">Assigned To</label>

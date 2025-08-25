@@ -8,6 +8,6 @@ const app: Application = express();
 app.use(cors(CorsOptions));
 app.use(express.json());
 
-app.use("./routes", taskRoutes);
+app.use("/api", taskRoutes);
 
 export default app;

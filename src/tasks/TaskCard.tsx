@@ -2,6 +2,9 @@ import Task from "./Task";
 import taskPlaceholderImage from "../assets/task-placeholder-image.png"
 
 function formatDescription(description: string): string {
+    if (description.length <= 60) {
+        return description;
+    }
     return description.substring(0, 60) + "...";
 }
 
