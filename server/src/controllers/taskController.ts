@@ -16,11 +16,15 @@ export const getTasks = async (req: Request, res: Response) => {
         res.status(200).json({
             page,
             limit,
+            message: "Tasks fetched successfully",
             total: MOCK_TASKS.length,
             tasks: paginated
         });
     } catch (err) {
-        res.status(500).json({ error: "Internal server error." });
+        console.error("Error getting tasks:", err);
+        return res.status(500).json({
+            error: "Internal Server Error",
+        });
     }
 }
 
@@ -56,3 +60,27 @@ export const createTask = async (req: Request, res: Response) => {
     }
 }
 
+export const updateTask = async (req: Request, res: Response) => {
+    try {
+        const { _id } = req.query;
+        const taskId = parseInt(_id as string, 10);
+        const updates = req.body;
+
+        const taskIndex = MOCK_TASKS.findIndex((t) => t.id === taskId);
+        if (taskIndex === -1) {
+            return res.status(404).json({ error: "Task not found" });
+        }
+
+        const updatedTask = Object.assign(MOCK_TASKS[taskIndex], {
+            ...updates,
+            dueDate: updates.dueDate ? new Date(updates.dueDate) : MOCK_TASKS[taskIndex].dueDate,
+        });
+
+        return res.status(200).json({
+            message: "Task updated successfully",
+            task: updatedTask,
+        });
+    } catch (err) {
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}

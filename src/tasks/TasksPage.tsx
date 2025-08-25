@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import Task from "./Task";
-import { getTasks } from "../utils/api"
+import { getTasks, updateTask } from "../utils/api"
 
 function TasksPage() {
 
@@ -10,11 +10,15 @@ function TasksPage() {
     const [loadError, setLoadError] = useState<string | undefined>(undefined);
     const [currentPage, setCurrentPage] = useState<number>(1);
 
-    const saveTask = (task: Task) => {
-        let updatedTasks = tasks.map((t: Task) => {
-            return t.id === task.id ? task : t;
-        });
-        setTasks(updatedTasks);
+    const saveTask = async (task: Task) => {
+        try {
+            const updatedTask = await updateTask(task);
+            setTasks((prev) =>
+                prev.map((t) => (t.id === task.id ? updatedTask : t))
+            );
+        } catch (err) {
+            console.error("Error updating task: ", err);
+        }
     }
 
     const handleMoreClick = () => {

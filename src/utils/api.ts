@@ -29,3 +29,19 @@ export async function createTask(task: Task): Promise<Task> {
     const data = await response.json();
     return data.task;
 }
+
+export async function updateTask(task: Task): Promise<Task> {
+    const response = await fetch(
+        `${API_URL}/?_id=${task.id}`,
+        {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(task),
+        });
+    if (!response.ok) {
+        throw new Error(`Failed to update task: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.task;
+}
