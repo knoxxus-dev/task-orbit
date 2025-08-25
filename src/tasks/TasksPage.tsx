@@ -8,6 +8,7 @@ function TasksPage() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [loadError, setLoadError] = useState<string | undefined>(undefined);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     const saveTask = (task: Task) => {
         let updatedTasks = tasks.map((t: Task) => {
@@ -16,13 +17,21 @@ function TasksPage() {
         setTasks(updatedTasks);
     }
 
+    const handleMoreClick = () => {
+        setCurrentPage((currentPage) => currentPage + 1);
+    }
+
     useEffect(() => {
         const fetchTasks = async () => {
             try {
                 setLoading(true);
-                const data = await getTasks();
+                const data = await getTasks(currentPage);
                 setLoadError("");
-                setTasks(data);
+                if (currentPage === 1) {
+                    setTasks(data);
+                } else {
+                    setTasks((tasks) => [...tasks, ...data]);
+                }
             } catch (e) {
                 if (e instanceof Error) {
                     setLoadError(e.message);
@@ -33,7 +42,7 @@ function TasksPage() {
         }
 
         fetchTasks();
-    }, []);
+    }, [currentPage]);
 
     return (
         <>
@@ -56,6 +65,18 @@ function TasksPage() {
                 tasks={tasks}
                 onSave={saveTask}
             />
+
+            {!loading && !loadError && (
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="button-group fluid">
+                            <button className="button default" onClick={handleMoreClick}>
+                                More...
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {loading && (
                 <div className="center page">
