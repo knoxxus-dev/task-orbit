@@ -27,7 +27,10 @@ export async function createTask(task: Task): Promise<Task> {
     }
 
     const data = await response.json();
-    return data.task;
+    return {
+        ...data.task,
+        dueDate: data.task.dueDate ? new Date(data.task.dueDate) : null,
+    };
 }
 
 export async function updateTask(task: Task): Promise<Task> {
@@ -43,5 +46,8 @@ export async function updateTask(task: Task): Promise<Task> {
     }
 
     const data = await response.json();
-    return data.task;
+    return {
+        ...data.task,
+        dueDate: data.task.dueDate ? new Date(data.task.dueDate) : null,
+    };
 }
