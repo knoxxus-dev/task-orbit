@@ -1,5 +1,6 @@
 import Task from "./Task";
-import taskPlaceholderImage from "../assets/task-placeholder-image.png"
+import taskPlaceholderImage from "../assets/task-placeholder-image.png";
+import { Link } from "react-router";
 
 function formatDescription(description: string): string {
     if (description.length <= 60) {
@@ -20,10 +21,12 @@ function TaskCard({ task, onEdit }: TaskCardProps) {
     return (
         <div className="card">
             <section className="section dark">
-                <img src={taskPlaceholderImage} alt="task-image"></img>
-                <h5 className="strong">
-                    <strong>{task.title}</strong>
-                </h5>
+                <Link to={task.id ? task.id.toString() : "#"}>
+                    <img src={taskPlaceholderImage} alt="task-image"></img>
+                    <h5 className="strong">
+                        <strong>{task.title}</strong>
+                    </h5>
+                </Link>
                 <p>{formatDescription(task.description)}</p>
                 <p>{task.assignedTo}</p>
                 <p>{task.dueDate.toString()}</p>
