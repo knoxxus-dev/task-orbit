@@ -62,8 +62,7 @@ export const createTask = async (req: Request, res: Response) => {
 
 export const updateTask = async (req: Request, res: Response) => {
     try {
-        const { _id } = req.query;
-        const taskId = parseInt(_id as string, 10);
+        const taskId = parseInt(req.params.id, 10);
         const updates = req.body;
 
         const taskIndex = MOCK_TASKS.findIndex((t) => t.id === taskId);
