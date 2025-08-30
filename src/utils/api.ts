@@ -51,3 +51,17 @@ export async function updateTask(task: Task): Promise<Task> {
         dueDate: data.task.dueDate ? new Date(data.task.dueDate) : null,
     };
 }
+
+export async function getTaskById(taskId: number): Promise<Task> {
+    const response = await fetch(`${API_URL}/${taskId}`, { method: "GET" });
+
+    if(!response.ok) {
+        throw new Error(`Failed to fetch task: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return {
+        ...data.task,
+        dueDate: data.task.dueDate ? new Date(data.task.dueDate) : null
+    };
+}
