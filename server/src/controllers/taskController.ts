@@ -62,8 +62,7 @@ export const createTask = async (req: Request, res: Response) => {
 
 export const updateTask = async (req: Request, res: Response) => {
     try {
-        const { _id } = req.query;
-        const taskId = parseInt(_id as string, 10);
+        const taskId = parseInt(req.params.id, 10);
         const updates = req.body;
 
         const taskIndex = MOCK_TASKS.findIndex((t) => t.id === taskId);
@@ -79,6 +78,22 @@ export const updateTask = async (req: Request, res: Response) => {
         return res.status(200).json({
             message: "Task updated successfully",
             task: updatedTask,
+        });
+    } catch (err) {
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+export const getTaskById = async (req: Request, res: Response) => {
+    try {
+        const taskId = parseInt(req.params.id, 10);
+        const task = MOCK_TASKS.find((t) => t.id === taskId);
+        if(!task) {
+            return res.status(404).json({ error: "Task not found" });
+        }
+        return res.status(200).json({
+            message: "Task fetched successfully",
+            task: task,
         });
     } catch (err) {
         return res.status(500).json({ error: "Internal server error" });
