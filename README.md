@@ -19,8 +19,10 @@ Task Orbit is a full-stack task management application built with React, TypeScr
 ## Project Structure
 
 ### Frontend
-The frontend code is located in the `src/` directory:
+The frontend code is located in the `client/src/` directory:
 - `tasks/`: Contains components for task management (e.g., `TaskCard`, `TaskForm`, `TaskList`, `TasksPage`).
+- `home/`: Contains the homepage component.
+- `utils/`: Contains utility functions like API calls.
 - `assets/`: Contains static assets like images.
 - `App.tsx`: Main application component.
 - `main.tsx`: Entry point for the React app.
@@ -29,6 +31,7 @@ The frontend code is located in the `src/` directory:
 The backend code is located in the `server/src/` directory:
 - `routes/`: Defines API routes (e.g., `taskRoutes.ts`).
 - `controllers/`: Contains logic for handling API requests (e.g., `taskController.ts`).
+- `models/`: Contains data models (e.g., `Task.ts`, `MockTasks.ts`).
 - `config/`: Configuration files (e.g., `corsOptions.ts`).
 - `server.ts`: Starts the Express server.
 - `app.ts`: Configures middleware and routes.
@@ -48,29 +51,25 @@ The backend code is located in the `server/src/` directory:
 2. Install dependencies for both frontend and backend:
 
     ```bash
-    npm install
-    cd server
-    npm install
+    npm install --workspaces
 ### Development
 To run the project in development mode:
 
 1. Start the backend server:
 
     ```bash
-    npm run dev --prefix server
+    npm run dev --workspace server
 2. Start the frontend development server:
 
     ```bash
-    npm run dev
-3. Alternatively, you can run both servers concurrently:
-
-    ```bash
-    npm run dev:fullstack
-The frontend will be available at http://localhost:5173 and the backend at http://localhost:5000 unless specified in an environment file.
-
+    npm run dev --workspace client
 ### API Endpoints
-- GET /routes: Fetch all tasks.
-- POST /routes: Create a new task.
+
+#### Task Endpoints
+- **GET** `/api/`: Fetch all tasks with pagination support ([_page](http://_vscodecontentref_/1) and [_limit](http://_vscodecontentref_/2) query parameters).
+- **GET** `/api/:id`: Fetch a task by its ID.
+- **POST** `/api/`: Create a new task.
+- **PUT** `/api/:id`: Update an existing task by its ID.
 
 ### Technologies Used
 
