@@ -31,7 +31,7 @@ function App() {
         </div>
       </header>
 
-      <main className="p-6 bg-gray-50 min-h-screen">
+      <main className="p-2 bg-gray-50 min-h-screen">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/tasks" element={<TasksPage />} />
