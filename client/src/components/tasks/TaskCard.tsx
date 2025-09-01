@@ -1,12 +1,13 @@
 import Task from "./Task";
-import taskPlaceholderImage from "../../assets/task-placeholder-image.png";
 import { Link } from "react-router";
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "@/components/ui/card";
 
 function formatDescription(description: string): string {
-    if (description.length <= 60) {
+    if (description.length <= 100) {
         return description;
     }
-    return description.substring(0, 60) + "...";
+    return description.substring(0, 100) + "...";
 }
 
 interface TaskCardProps {
@@ -19,28 +20,50 @@ function TaskCard({ task, onEdit }: TaskCardProps) {
         onEdit(taskBeingEdited);
     };
     return (
-        <div>
-            <section>
-                <Link to={task.id ? task.id.toString() : "#"}>
-                    <img src={taskPlaceholderImage} alt="task-image"></img>
-                    <h5>
-                        <strong>{task.title}</strong>
-                    </h5>
-                </Link>
-                <p>{formatDescription(task.description)}</p>
-                <p>{task.assignedTo}</p>
-                <p>{task.dueDate.toString()}</p>
-                <p>{task.priority}</p>
-                <p>{task.status}</p>
-                <button
-                    onClick={() => {
-                        handleEditClick(task);
-                    }}
+        <Card
+            key={task.id}
+            className="h-full min-h-[300px] flex flex-col bg-white shadow-md hover:shadow-lg transition-shadow rounded-2xl border border-gray-200"
+        >
+            <CardHeader className="pb-2">
+                <CardTitle>
+                    <Link
+                        to={task.id ? task.id.toString() : "#"}
+                        className="text-lg font-semibold text-blue-600 hover:underline"
+                    >
+                        {task.title}
+                    </Link>
+                </CardTitle>
+                <CardDescription className="text-gray-600 text-sm mt-1">
+                    {formatDescription(task.description)}
+                </CardDescription>
+            </CardHeader>
+
+            <CardContent className="space-y-2 text-gray-700 text-sm flex-grow">
+                <p>
+                    <span className="font-medium">Assigned To:</span> {task.assignedTo}
+                </p>
+                <p>
+                    <span className="font-medium">Due Date:</span>{" "}
+                    {task.dueDate.toString()}
+                </p>
+                <p>
+                    <span className="font-medium">Priority:</span> {task.priority}
+                </p>
+                <p>
+                    <span className="font-medium">Status:</span> {task.status}
+                </p>
+            </CardContent>
+
+            <CardFooter className="flex justify-end">
+                <Button
+                    variant="outline"
+                    className="rounded-lg border-blue-500 text-blue-500 hover:bg-blue-50 text-sm"
+                    onClick={() => handleEditClick(task)}
                 >
                     Edit
-                </button>
-            </section>
-        </div>
+                </Button>
+            </CardFooter>
+        </Card>
     );
 }
 

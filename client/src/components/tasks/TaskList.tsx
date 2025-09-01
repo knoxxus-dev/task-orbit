@@ -21,7 +21,7 @@ function TaskList({ tasks, onSave }: TaskListProps) {
     };
 
     return (
-        <div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-6 items-stretch">
             {tasks.map((task) => (
                 <div key={task.id}>
                     {task === taskBeingEdited ? (
