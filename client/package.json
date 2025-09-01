@@ -5,8 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:client": "vite",
-    "dev:fullstack": "concurrently \"npm run dev:client\" \"npm run dev --prefix server\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
