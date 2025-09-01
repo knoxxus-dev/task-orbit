@@ -4,7 +4,7 @@ import Task from "../models/Task";
 
 export const getTasks = async (req: Request, res: Response) => {
     try {
-        const { _page = "1", _limit = "10" } = req.query;
+        const { _page = "1", _limit = "8" } = req.query;
 
         const page = parseInt(_page as string, 10);
         const limit = parseInt(_limit as string, 10);
@@ -88,7 +88,7 @@ export const getTaskById = async (req: Request, res: Response) => {
     try {
         const taskId = parseInt(req.params.id, 10);
         const task = MOCK_TASKS.find((t) => t.id === taskId);
-        if(!task) {
+        if (!task) {
             return res.status(404).json({ error: "Task not found" });
         }
         return res.status(200).json({
