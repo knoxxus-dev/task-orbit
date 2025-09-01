@@ -1,6 +1,8 @@
 import type { SyntheticEvent } from "react";
 import { useState } from "react";
 import Task from "./Task";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface errorSchema {
     title: string;
@@ -10,10 +12,11 @@ interface errorSchema {
 interface TaskFormProps {
     task: Task;
     onSave: (task: Task) => void;
-    onCancel: () => void;
+    open: boolean;
+    onClose: () => void;
 }
 
-function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
+function TaskForm({ task: initialTask, onSave, open, onClose }: TaskFormProps) {
 
     const [task, setTask] = useState<Task>(initialTask);
     const [error, setError] = useState<errorSchema>({ title: '', description: '' });
@@ -73,94 +76,109 @@ function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
         setError(() => validate(updatedTask));
     }
 
+
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="title">Task Title</label>
-            <input
-                type="text"
-                name="title"
-                placeholder="Enter task title"
-                required
-                value={task.title}
-                onChange={handleChange}
-            />
-            {error.title.length > 0 && (
-                <div>
-                    <p>{error.title}</p>
-                </div>
-            )}
-            <label htmlFor="description">Task Description</label>
-            <input
-                type="text"
-                name="description"
-                placeholder="Enter task description"
-                value={task.description}
-                onChange={handleChange}
-            />
-            {error.description.length > 0 && (
-                <div>
-                    <p>{error.description}</p>
-                </div>
-            )}
-            <label htmlFor="assignedTo">Assigned To</label>
-            <input
-                type="text"
-                name="assignedTo"
-                placeholder="Enter assignee's name"
-                value={task.assignedTo}
-                onChange={handleChange}
-            />
+        <Dialog open={open} onOpenChange={onClose}>
+            <DialogContent className="max-w-lg rounded-xl">
+                <DialogHeader>
+                    <DialogTitle>Edit Task</DialogTitle>
+                </DialogHeader>
 
-            <label htmlFor="dueDate">Due Date</label>
-            <input
-                type="date"
-                name="dueDate"
-                value={task.dueDate.toISOString().split("T")[0]}
-                onChange={handleChange}
-            />
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium">Title</label>
+                        <input
+                            type="text"
+                            name="title"
+                            value={task.title}
+                            onChange={handleChange}
+                            className="w-full border rounded-md px-2 py-1"
+                            required
+                        />
+                    </div>
 
-            <label htmlFor="priority">Priority</label>
-            <select
-                name="priority"
-                defaultValue="medium"
-                value={task.priority}
-                onChange={handleChange}
-            >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-            </select>
+                    <div>
+                        <label className="block text-sm font-medium">Description</label>
+                        <input
+                            type="text"
+                            name="description"
+                            value={task.description}
+                            onChange={handleChange}
+                            className="w-full border rounded-md px-2 py-1"
+                        />
+                    </div>
 
-            <label htmlFor="status">Status</label>
-            <select
-                name="status"
-                defaultValue="To Do"
-                value={task.priority}
-                onChange={handleChange}
-            >
-                <option value="To Do">To Do</option>
-                <option value="In-progress">In Progress</option>
-                <option value="Done">Done</option>
-            </select>
+                    <div>
+                        <label className="block text-sm font-medium">Assigned To</label>
+                        <input
+                            type="text"
+                            name="assignedTo"
+                            value={task.assignedTo}
+                            onChange={handleChange}
+                            className="w-full border rounded-md px-2 py-1"
+                        />
+                    </div>
 
-            <label htmlFor="isArchived">Archived?</label>
-            <input
-                type="checkbox"
-                name="isArchived"
-                checked={task.isArchived}
-                onChange={handleChange}
-            />
+                    <div>
+                        <label className="block text-sm font-medium">Due Date</label>
+                        <input
+                            type="date"
+                            name="dueDate"
+                            value={task.dueDate.toISOString().split("T")[0]}
+                            onChange={handleChange}
+                            className="w-full border rounded-md px-2 py-1"
+                        />
+                    </div>
 
-            <div>
-                <button type="submit">
-                    Save
-                </button>
-                <button type="button" onClick={onCancel}>
-                    Cancel
-                </button>
-            </div>
-        </form>
+                    <div>
+                        <label className="block text-sm font-medium">Priority</label>
+                        <select
+                            name="priority"
+                            value={task.priority}
+                            onChange={handleChange}
+                            className="w-full border rounded-md px-2 py-1"
+                        >
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium">Status</label>
+                        <select
+                            name="status"
+                            value={task.status}
+                            onChange={handleChange}
+                            className="w-full border rounded-md px-2 py-1"
+                        >
+                            <option>To Do</option>
+                            <option>In-progress</option>
+                            <option>Done</option>
+                        </select>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            name="isArchived"
+                            checked={task.isArchived}
+                            onChange={handleChange}
+                        />
+                        <label className="text-sm">Archived?</label>
+                    </div>
+
+                    <DialogFooter className="flex justify-end gap-2">
+                        <Button type="button" variant="outline" onClick={onClose}>
+                            Cancel
+                        </Button>
+                        <Button type="submit">Save</Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
     );
+
 }
 
 export default TaskForm;
