@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import Task from "./Task";
-import { getTasks, updateTask } from "../utils/api"
+import { getTasks, updateTask } from "../../utils/api"
 
 function TasksPage() {
 
@@ -49,46 +49,38 @@ function TasksPage() {
     }, [currentPage]);
 
     return (
-        <>
-            <h1>Tasks</h1>
+        <div className="p-6 space-y-4">
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-gray-800">Tasks</h1>
+            </div>
 
             {loadError && (
-                <div className="row">
-                    <div className="card large error">
-                        <section>
-                            <p>
-                                <span className="icon-alert inverse "></span>
-                                {loadError}
-                            </p>
-                        </section>
+                <div className="bg-red-100 border border-red-300 text-red-700 p-3 rounded-lg">
+                    <p>{loadError}</p>
+                </div>
+            )}
+
+            <div className="space-y-4">
+                <TaskList tasks={tasks} onSave={saveTask} />
+            </div>
+
+            <div className="flex justify-center">
+                {!loading && !loadError && (
+                    <button
+                        onClick={handleMoreClick}
+                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg shadow hover:bg-gray-200 transition"
+                    >
+                        More...
+                    </button>
+                )}
+
+                {loading && (
+                    <div className="text-gray-500">
+                        <p>Loading...</p>
                     </div>
-                </div>
-            )}
-
-            <TaskList
-                tasks={tasks}
-                onSave={saveTask}
-            />
-
-            {!loading && !loadError && (
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="button-group fluid">
-                            <button className="button default" onClick={handleMoreClick}>
-                                More...
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {loading && (
-                <div className="center page">
-                    <span className="spinner primary"></span>
-                    <p>Loading...</p>
-                </div>
-            )}
-        </>
+                )}
+            </div>
+        </div>
     );
 }
 

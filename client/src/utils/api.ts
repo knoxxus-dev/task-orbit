@@ -1,8 +1,8 @@
-import Task from "../tasks/Task";
+import Task from "../components/tasks/Task";
 
 const API_URL = "http://localhost:5000/api";
 
-export async function getTasks(page: number = 1, limit: number = 10): Promise<Task[]> {
+export async function getTasks(page: number = 1, limit: number = 8): Promise<Task[]> {
     const response = await fetch(`${API_URL}/?_page=${page}&_limit=${limit}`, { method: "GET" });
     if (!response.ok) {
         throw new Error(`Failed to get tasks: ${response.status} ${response.statusText}`);
