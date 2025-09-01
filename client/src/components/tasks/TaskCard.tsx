@@ -1,5 +1,5 @@
 import Task from "./Task";
-import taskPlaceholderImage from "../assets/task-placeholder-image.png";
+import taskPlaceholderImage from "../../assets/task-placeholder-image.png";
 import { Link } from "react-router";
 
 function formatDescription(description: string): string {
@@ -19,11 +19,11 @@ function TaskCard({ task, onEdit }: TaskCardProps) {
         onEdit(taskBeingEdited);
     };
     return (
-        <div className="card">
-            <section className="section dark">
+        <div>
+            <section>
                 <Link to={task.id ? task.id.toString() : "#"}>
                     <img src={taskPlaceholderImage} alt="task-image"></img>
-                    <h5 className="strong">
+                    <h5>
                         <strong>{task.title}</strong>
                     </h5>
                 </Link>
@@ -33,12 +33,10 @@ function TaskCard({ task, onEdit }: TaskCardProps) {
                 <p>{task.priority}</p>
                 <p>{task.status}</p>
                 <button
-                    className="bordered"
                     onClick={() => {
                         handleEditClick(task);
                     }}
                 >
-                    <span className="icon-edit "></span>
                     Edit
                 </button>
             </section>

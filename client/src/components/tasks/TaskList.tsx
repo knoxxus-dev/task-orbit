@@ -21,9 +21,9 @@ function TaskList({ tasks, onSave }: TaskListProps) {
     };
 
     return (
-        <div className="row">
+        <div>
             {tasks.map((task) => (
-                <div key={task.id} className="cols-sm">
+                <div key={task.id}>
                     {task === taskBeingEdited ? (
                         <TaskForm
                             task={task}

@@ -1,4 +1,4 @@
-import Task from "../tasks/Task";
+import Task from "../components/tasks/Task";
 
 const API_URL = "http://localhost:5000/api";
 

@@ -74,7 +74,7 @@ function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
     }
 
     return (
-        <form className="input-group vertical" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="title">Task Title</label>
             <input
                 type="text"
@@ -85,7 +85,7 @@ function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
                 onChange={handleChange}
             />
             {error.title.length > 0 && (
-                <div className="card error">
+                <div>
                     <p>{error.title}</p>
                 </div>
             )}
@@ -98,7 +98,7 @@ function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
                 onChange={handleChange}
             />
             {error.description.length > 0 && (
-                <div className="card error">
+                <div>
                     <p>{error.description}</p>
                 </div>
             )}
@@ -151,15 +151,11 @@ function TaskForm({ task: initialTask, onSave, onCancel }: TaskFormProps) {
                 onChange={handleChange}
             />
 
-            <div className="input-group">
-                <button type="submit" className="primary bordered medium"
-                >
+            <div>
+                <button type="submit">
                     Save
                 </button>
-                <span />
-                <button type="button" className="bordered medium"
-                    onClick={onCancel}
-                >
+                <button type="button" onClick={onCancel}>
                     Cancel
                 </button>
             </div>

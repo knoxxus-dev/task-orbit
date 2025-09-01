@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import Task from "./Task";
-import { getTasks, updateTask } from "../utils/api"
+import { getTasks, updateTask } from "../../utils/api"
 
 function TasksPage() {
 
@@ -49,46 +49,28 @@ function TasksPage() {
     }, [currentPage]);
 
     return (
-        <>
+        <div>
             <h1>Tasks</h1>
-
             {loadError && (
-                <div className="row">
-                    <div className="card large error">
-                        <section>
-                            <p>
-                                <span className="icon-alert inverse "></span>
-                                {loadError}
-                            </p>
-                        </section>
-                    </div>
+                <div>
+                    <p>{loadError}</p>
                 </div>
             )}
-
             <TaskList
                 tasks={tasks}
                 onSave={saveTask}
             />
-
             {!loading && !loadError && (
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="button-group fluid">
-                            <button className="button default" onClick={handleMoreClick}>
-                                More...
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <button onClick={handleMoreClick}>
+                    More...
+                </button>
             )}
-
             {loading && (
-                <div className="center page">
-                    <span className="spinner primary"></span>
+                <div>
                     <p>Loading...</p>
                 </div>
             )}
-        </>
+        </div>
     );
 }
 

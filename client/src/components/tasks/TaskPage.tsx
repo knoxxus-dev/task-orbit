@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getTaskById } from '../utils/api';
+import { getTaskById } from '../../utils/api';
 import TaskDetail from './TaskDetail';
 import Task from './Task';
 import { useParams } from 'react-router';
@@ -31,30 +31,22 @@ function ProjectPage() {
 
     return (
         <div>
-            <>
-                <h1>Task Detail</h1>
-
-                {loading && (
-                    <div className="center-page">
-                        <span className="spinner primary"></span>
-                        <p>Loading...</p>
-                    </div>
-                )}
-
-                <div className="row">
-                    {loadError && (
-                        <div className="card large error">
-                            <section>
-                                <p>
-                                    <span className="icon-alert inverse "></span> {loadError}
-                                </p>
-                            </section>
-                        </div>
-                    )}
+            <h1>Task Detail</h1>
+            {loading && (
+                <div>
+                    <p>Loading...</p>
                 </div>
-
-                {task && <TaskDetail task={task} />}
-            </>
+            )}
+            {loadError && (
+                <div>
+                    <section>
+                        <p>
+                            {loadError}
+                        </p>
+                    </section>
+                </div>
+            )}
+            {task && <TaskDetail task={task} />}
         </div>
     );
 }
