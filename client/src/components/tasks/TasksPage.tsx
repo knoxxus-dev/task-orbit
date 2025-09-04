@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import Task from "./Task";
-import { getTasks, updateTask } from "../../utils/api"
+import { getTasks, updateTask } from "../../utils/api";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
+import { ChevronLeftIcon, ChevronRightIcon, } from "lucide-react"
 
 function TasksPage() {
 
@@ -21,21 +23,13 @@ function TasksPage() {
         }
     }
 
-    const handleMoreClick = () => {
-        setCurrentPage((currentPage) => currentPage + 1);
-    }
-
     useEffect(() => {
         const fetchTasks = async () => {
             try {
                 setLoading(true);
                 const data = await getTasks(currentPage);
                 setLoadError("");
-                if (currentPage === 1) {
-                    setTasks(data);
-                } else {
-                    setTasks((tasks) => [...tasks, ...data]);
-                }
+                setTasks(data);
             } catch (e) {
                 if (e instanceof Error) {
                     setLoadError(e.message);
@@ -66,12 +60,38 @@ function TasksPage() {
 
             <div className="flex justify-center">
                 {!loading && !loadError && (
-                    <button
-                        onClick={handleMoreClick}
-                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg shadow hover:bg-gray-200 transition"
-                    >
-                        More...
-                    </button>
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationLink
+                                    onClick={() => setCurrentPage((currentPage) => Math.max(currentPage - 1, 1))}
+                                >
+                                    <ChevronLeftIcon />
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink
+                                    isActive={currentPage === 1}
+                                    onClick={() => setCurrentPage(1)}
+                                >
+                                    1
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink
+                                    isActive={currentPage === 2}
+                                    onClick={() => setCurrentPage(2)}
+                                >
+                                    2
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink onClick={() => setCurrentPage((currentPage) => currentPage + 1)}>
+                                    <ChevronRightIcon />
+                                </PaginationLink>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
                 )}
 
                 {loading && (
