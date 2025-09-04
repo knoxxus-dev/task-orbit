@@ -55,7 +55,7 @@ export async function updateTask(task: Task): Promise<Task> {
 export async function getTaskById(taskId: number): Promise<Task> {
     const response = await fetch(`${API_URL}/${taskId}`, { method: "GET" });
 
-    if(!response.ok) {
+    if (!response.ok) {
         throw new Error(`Failed to fetch task: ${response.status} ${response.statusText}`);
     }
 
@@ -64,4 +64,13 @@ export async function getTaskById(taskId: number): Promise<Task> {
         ...data.task,
         dueDate: data.task.dueDate ? new Date(data.task.dueDate) : null
     };
+}
+
+export async function getTotalTasks(): Promise<number> {
+    const response = await fetch(`${API_URL}`, { method: "GET" });
+    if (!response.ok) {
+        throw new Error(`Failed to get task length: ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data.total;
 }

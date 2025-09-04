@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import Task from "./Task";
-import { getTasks, updateTask } from "../../utils/api";
+import { getTasks, updateTask, getTotalTasks } from "../../utils/api";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
 import { ChevronLeftIcon, ChevronRightIcon, } from "lucide-react"
 
@@ -11,6 +11,9 @@ function TasksPage() {
     const [loading, setLoading] = useState<boolean>(false);
     const [loadError, setLoadError] = useState<string | undefined>(undefined);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalTasks, setTotalTasks] = useState<number>();
+    const tasksPerPage = 8;
+    const totalPages = Math.ceil((totalTasks ?? 0) / tasksPerPage);
 
     const saveTask = async (task: Task) => {
         try {
@@ -22,6 +25,25 @@ function TasksPage() {
             console.error("Error updating task: ", err);
         }
     }
+
+    useEffect(() => {
+        const fetchTotalTasks = async () => {
+            try {
+                setLoading(true);
+                const data = await getTotalTasks();
+                setLoadError("");
+                setTotalTasks(data);
+            } catch (e) {
+                if (e instanceof Error) {
+                    setLoadError(e.message);
+                }
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchTotalTasks();
+    }, []);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -69,35 +91,23 @@ function TasksPage() {
                                     <ChevronLeftIcon />
                                 </PaginationLink>
                             </PaginationItem>
+                            {Array.from({ length: totalPages || 0 }, (_, i) => i + 1).map((page) => (
+                                <PaginationItem key={page}>
+                                    <PaginationLink
+                                        isActive={page === currentPage}
+                                        onClick={() => setCurrentPage(page)}
+                                    >
+                                        {page}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            ))}
                             <PaginationItem>
-                                <PaginationLink
-                                    isActive={currentPage === 1}
-                                    onClick={() => setCurrentPage(1)}
-                                >
-                                    1
-                                </PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink
-                                    isActive={currentPage === 2}
-                                    onClick={() => setCurrentPage(2)}
-                                >
-                                    2
-                                </PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink onClick={() => setCurrentPage((currentPage) => currentPage + 1)}>
+                                <PaginationLink onClick={() => setCurrentPage((currentPage) => Math.min(currentPage + 1, totalPages))}>
                                     <ChevronRightIcon />
                                 </PaginationLink>
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>
-                )}
-
-                {loading && (
-                    <div className="text-gray-500">
-                        <p>Loading...</p>
-                    </div>
                 )}
             </div>
         </div>
